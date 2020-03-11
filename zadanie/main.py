@@ -125,7 +125,7 @@ def skusPlusStlpec(mapaZaciatok, mapaKoniec, riadokNula, stlpecNula, vygenerovan
 
 def skusaj(mapaZaciatok, mapaKoniec, riadokNula, stlpecNula, vygenerovane):
     global pocetRoznych, poslednaVygenerovana
-    print("PISEM MAPU DO PICE")
+    print("PISEM MAPU")
     vypisMapu(mapaZaciatok)
     print("VYPISAL SOM MAPU")
     prvaObmena = skusMinusRiadok(mapaZaciatok, mapaKoniec, riadokNula, stlpecNula, vygenerovane)
