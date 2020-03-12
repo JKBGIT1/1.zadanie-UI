@@ -29,13 +29,29 @@ def vypisMapu(mapa):
 
 
 def zistiPocetRoznych(obmena, mapaKoniec):
-    pocetRoznychFunkcia = 0
-    for i in range(len(mapaKoniec)):
-        for j in range(len(mapaKoniec[i])):
-            if (mapaKoniec[i][j] is not obmena[i][j]):
-                pocetRoznychFunkcia = pocetRoznychFunkcia + 1
+    zhoda = False
+    vzdialenost = 0
+    for i in range(len(obmena)):
+        for j in range(len(obmena[i])):
+            zhoda = False
+            for k in range(len(mapaKoniec)):
+                for l in range(len(mapaKoniec[k])):
+                    if obmena[i][j] == mapaKoniec[k][l]:
+                        zhoda = True
+                        vzdialenostX = vzdialenostY = 0
+                        if i - k < 0:
+                            vzdialenostX = (i - k) * (-1)
+                        else:
+                            vzdialenostX = (i - k)
+                        if j - l < 0:
+                            vzdialenostY = (j - l) * (-1)
+                        else:
+                            vzdialenostY = (j - l)
+                        vzdialenost = vzdialenost + vzdialenostX + vzdialenostY
+                if zhoda:
+                    break
 
-    return pocetRoznychFunkcia
+    return vzdialenost
 
 
 def zistiPoziciuNula(mapaZaciatok):
@@ -143,19 +159,18 @@ def skusaj(mapaKoniec):
     skusPlusStlpec(vytiahnuteHeap, mapaKoniec)
     return vytiahnuteHeap
 
-# [[2, 1, 3],
-#               [4, 6, 5],
-#               [7, 8, 0]]
-# mapaZaciatok = [[1, 2, 3],
-#                 [4, 8, 6],
-#                 [7, 5, 0]]
-
 mapaKoniec = [[1, 2, 3],
-              [4, 5, 6],
+              [4, 6, 5],
               [7, 8, 0]]
-mapaZaciatok = [[7, 8, 6],
-                [5, 4, 3],
-                [2, 0, 1]]
+mapaZaciatok = [[1, 2, 7],
+                [4, 8, 6],
+                [3, 5, 0]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
+# mapaZaciatok = [[7, 8, 6],
+#                 [5, 4, 3],
+#                 [2, 0, 1]]
 
 pocetRoznych = zistiPocetRoznych(mapaZaciatok, mapaKoniec)
 poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, None)
