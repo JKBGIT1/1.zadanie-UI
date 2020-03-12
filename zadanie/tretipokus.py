@@ -10,12 +10,6 @@ class StavMapy:
         return self.pocetRoznych < other.pocetRoznych
 
 
-# class Prosim:
-#     def __init__(self, hodnota):
-#         self.hodnota = hodnota
-#     def __lt__(self, other):
-#         return self.hodnota < other.hodnota
-
 minHeap = [] # halda, do ktorej vhadzujem vsetky stavy mapy, ktore som vygeneroval a neboli pouzite, usporiadanie podla hodnoty pocetRoznych v classe StavMapy
 hashSet = set() # tento set funguje ako hash tabulka, len bez hodnotou pre kluce, z dovodu, ze sem  nebudem davat duplikaty
 riadokNula = stlpecNula = 0 # globalne premenne, ktore mi drzia suradnice, kde sa nachadza 0, teda prazdne policko
@@ -71,7 +65,9 @@ def vytvorStringMapa(mapa):
 
     return string
 
-
+#
+# tieto 4 funkcie sluzia na posuvanie neprazdneho policka na prazdne aby sa vygenerovala nova mapa
+#
 def zmenaMinusRiadok(obmena, mapaZaciatok):
     obmena[riadokNula][stlpecNula] = mapaZaciatok[riadokNula - 1][stlpecNula]
     obmena[riadokNula - 1][stlpecNula] = 0
@@ -162,9 +158,9 @@ def skusaj(mapaKoniec):
 mapaKoniec = [[1, 2, 3],
               [4, 6, 5],
               [7, 8, 0]]
-mapaZaciatok = [[1, 2, 7],
-                [4, 8, 6],
-                [3, 5, 0]]
+mapaZaciatok = [[1, 3, 6],
+                [4, 8, 0],
+                [7, 5, 2]]
 # mapaKoniec = [[1, 2, 3],
 #               [4, 5, 6],
 #               [7, 8, 0]]
@@ -182,27 +178,18 @@ while(pocetRoznych is not 0):
         break
     pocetRoznych = poslednyVytiahnuty.pocetRoznych
 
+rovnake = True
 if poslednyVytiahnuty is not None:
+    rovnake = False
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
         vypisMapu(poslednyVytiahnuty.mapa)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
         print("")
 else:
+    rovnake = False
     print("Nema riesenie.")
 
-
-# heapq.heappush(list, Prosim(1))
-# for i in list:
-#     print(i.hodnota)
-# print("")
-# print(heapq.heappop(list).hodnota)
-# string = "Pipik"
-# key = string.__hash__()
-#
-# hashSet.add(key)
-# hashSet.add("Pipik2".__hash__())
-# if "Pipik3".__hash__() in hashSet:
-#     print("PICO")
-# else:
-#     hashSet.add("Pipik3".__hash__())
+if rovnake:
+    print("Zaciatocny stav je koncovy.")
+    vypisMapu(mapaZaciatok)
