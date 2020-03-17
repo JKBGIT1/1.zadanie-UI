@@ -13,6 +13,7 @@ class StavMapy:
 minHeap = [] # halda, do ktorej vhadzujem vsetky stavy mapy, ktore som vygeneroval a neboli pouzite, usporiadanie podla hodnoty pocetRoznych v classe StavMapy
 hashSet = set() # tento set funguje ako hash tabulka, len bez hodnotou pre kluce, z dovodu, ze sem  nebudem davat duplikaty
 riadokNula = stlpecNula = 0 # globalne premenne, ktore mi drzia suradnice, kde sa nachadza 0, teda prazdne policko
+pocetKrokov = pocetSpracovanychUzlov = pocetVytvorenychUzlov = int(0)
 
 
 def vypisMapu(mapa):
@@ -93,52 +94,58 @@ def zmenaPlusStlpec(obmena, mapaZaciatok):
 
 
 def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
+    global pocetVytvorenychUzlov
     if (riadokNula - 1 >= 0):
-        print("Riadok minus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaMinusRiadok(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
         if hashObmeny not in hashSet:
+            pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
             heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
 
 
 def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
+    global pocetVytvorenychUzlov
     if (riadokNula + 1 < len(vytiahnuteHeap.mapa)):
-        print("Riadok plus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaPlusRiadok(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
         if hashObmeny not in hashSet:
+            pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
             heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
 
 
 def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
+    global pocetVytvorenychUzlov
     if (stlpecNula - 1 >= 0):
-        print("Stlpec minus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaMinusStlpec(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
         if hashObmeny not in hashSet:
+            pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
             heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
 
 
 def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
+    global pocetVytvorenychUzlov
     if (stlpecNula + 1 < len(vytiahnuteHeap.mapa[riadokNula])):
-        print("Stlpec plus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaPlusStlpec(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
         if hashObmeny not in hashSet:
+            pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = zistiPocetRoznych(obmenaMapy, mapaKoniec)
             heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
 
 
 def skusaj(mapaKoniec):
+    global pocetSpracovanychUzlov
     try:
         vytiahnuteHeap = heapq.heappop(minHeap)
+        pocetSpracovanychUzlov = pocetSpracovanychUzlov + 1
     except IndexError:
         return None
     vytiahnuteRozne = zistiPocetRoznych(vytiahnuteHeap.mapa, mapaKoniec)
@@ -155,18 +162,36 @@ def skusaj(mapaKoniec):
     skusPlusStlpec(vytiahnuteHeap, mapaKoniec)
     return vytiahnuteHeap
 
-mapaKoniec = [[1, 2, 3],
-              [4, 6, 5],
-              [7, 8, 0]]
-mapaZaciatok = [[1, 3, 6],
-                [4, 8, 0],
-                [7, 5, 2]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 6, 5],
+#               [7, 8, 0]]
+# mapaZaciatok = [[1, 3, 6],
+#                 [4, 8, 0],
+#                 [7, 5, 2]]
 # mapaKoniec = [[1, 2, 3],
 #               [4, 5, 6],
 #               [7, 8, 0]]
 # mapaZaciatok = [[7, 8, 6],
 #                 [5, 4, 3],
 #                 [2, 0, 1]]
+# mapaZaciatok = [[1, 2, 3],
+#                 [0, 4, 5],
+#                 [6, 7, 8]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
+# mapaZaciatok = [[1, 2, 5],
+#                 [3, 4, 6],
+#                 [7, 8, 0]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
+mapaZaciatok = [[2, 3, 4],
+                [5, 1, 6],
+                [7, 8, 0]]
+mapaKoniec = [[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 0]]
 
 pocetRoznych = zistiPocetRoznych(mapaZaciatok, mapaKoniec)
 poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, None)
@@ -183,12 +208,17 @@ if poslednyVytiahnuty is not None:
     rovnake = False
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
+        pocetKrokov = pocetKrokov + 1
         vypisMapu(poslednyVytiahnuty.mapa)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
         print("")
 else:
     rovnake = False
     print("Nema riesenie.")
+
+print("Pocet krokov: " + str(pocetKrokov))
+print("Pocet spracovanych uzlov " + str(pocetSpracovanychUzlov))
+print("Pocet vygenerovanych uzlov " + str(pocetVytvorenychUzlov))
 
 if rovnake:
     print("Zaciatocny stav je koncovy.")
