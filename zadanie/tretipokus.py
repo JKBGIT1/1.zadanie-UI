@@ -206,11 +206,14 @@ while(pocetRoznych is not 0):
 rovnake = True
 if poslednyVytiahnuty is not None:
     rovnake = False
+    postupnost = []
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
         pocetKrokov = pocetKrokov + 1
-        vypisMapu(poslednyVytiahnuty.mapa)
+        postupnost.append(poslednyVytiahnuty.mapa)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
+    for prvok in reversed(postupnost):
+        vypisMapu(prvok)
         print("")
 else:
     rovnake = False

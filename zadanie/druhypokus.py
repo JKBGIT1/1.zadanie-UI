@@ -82,7 +82,6 @@ def zmenaPlusStlpec(obmena, mapaZaciatok):
 def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
     global pocetVytvorenychUzlov
     if (riadokNula - 1 >= 0):
-        print("Riadok minus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaMinusRiadok(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
@@ -97,7 +96,6 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
 def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
     global pocetVytvorenychUzlov
     if (riadokNula + 1 < len(vytiahnuteHeap.mapa)):
-        print("Riadok plus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaPlusRiadok(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
@@ -111,7 +109,6 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
 def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
     global pocetVytvorenychUzlov
     if (stlpecNula - 1 >= 0):
-        print("Stlpec minus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaMinusStlpec(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
@@ -125,7 +122,6 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
 def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
     global pocetVytvorenychUzlov
     if (stlpecNula + 1 < len(vytiahnuteHeap.mapa[riadokNula])):
-        print("Stlpec plus")
         obmenaMapy = copy.deepcopy(vytiahnuteHeap.mapa)
         obmenaMapy = zmenaPlusStlpec(obmenaMapy, vytiahnuteHeap.mapa)
         hashObmeny = vytvorStringMapa(obmenaMapy).__hash__()
@@ -205,11 +201,14 @@ while(pocetRoznych is not 0):
 rovnake = True
 if poslednyVytiahnuty is not None:
     rovnake = False
+    postupnost = []
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
         pocetKrokov = pocetKrokov + 1
-        vypisMapu(poslednyVytiahnuty.mapa)
+        postupnost.append(poslednyVytiahnuty.mapa)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
+    for prvok in reversed(postupnost):
+        vypisMapu(prvok)
         print("")
 else:
     rovnake = False
