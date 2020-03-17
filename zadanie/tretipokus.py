@@ -1,12 +1,13 @@
 import copy
 import heapq
 
-class StavMapy:
-    def __init__(self, mapa, pocetRoznych, predosli):
-        self.mapa = copy.deepcopy(mapa)
-        self.pocetRoznych = pocetRoznych
-        self.predosli = predosli
-    def __lt__(self, other):
+class StavMapy: # classa, ktorou si reprezentuje jedne prvok heapu, prvky su usporiadane podla premenej pocetRoznych
+    def __init__(self, mapa, pocetRoznych, operacia, predosli):
+        self.mapa = copy.deepcopy(mapa) # 2d list reprezentuje mapu a jej aktualny stav
+        self.pocetRoznych = pocetRoznych # pocet policok, ktore su na roznom mieste od koncoveho stavu
+        self.operacia = operacia # slovo operacie, ktora sa vykonala na prazdne policko
+        self.predosli = predosli # odkaz na objekt Stav mapy z ktoreho bola mapa v tomto objekte vygenerovana
+    def __lt__(self, other): # potrebna funkcia na porovnovanie v heape. ficura pythonu
         return self.pocetRoznych < other.pocetRoznych
 
 
@@ -102,7 +103,7 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo HORE", vytiahnuteHeap))
 
 
 def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
@@ -114,7 +115,7 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DOLE", vytiahnuteHeap))
 
 
 def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
@@ -126,7 +127,7 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO LAVA", vytiahnuteHeap))
 
 
 def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
@@ -138,7 +139,7 @@ def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = zistiPocetRoznych(obmenaMapy, mapaKoniec)
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO PRAVA", vytiahnuteHeap))
 
 
 def skusaj(mapaKoniec):
@@ -194,7 +195,7 @@ mapaKoniec = [[1, 2, 3],
               [7, 8, 0]]
 
 pocetRoznych = zistiPocetRoznych(mapaZaciatok, mapaKoniec)
-poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, None)
+poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, "Zaciatok", None)
 heapq.heappush(minHeap, poslednyVytiahnuty)
 
 while(pocetRoznych is not 0):
@@ -206,15 +207,20 @@ while(pocetRoznych is not 0):
 rovnake = True
 if poslednyVytiahnuty is not None:
     rovnake = False
-    postupnost = []
+    # postupnost = []
+    postupnost2 = []
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
         pocetKrokov = pocetKrokov + 1
-        postupnost.append(poslednyVytiahnuty.mapa)
+        # postupnost.append(poslednyVytiahnuty.mapa)
+        postupnost2.append(poslednyVytiahnuty.operacia)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
-    for prvok in reversed(postupnost):
-        vypisMapu(prvok)
-        print("")
+    # for prvok in reversed(postupnost):
+    #     vypisMapu(prvok)
+    #     print("")
+    for prvok2 in reversed(postupnost2):
+        print(prvok2)
+    print("")
 else:
     rovnake = False
     print("Nema riesenie.")

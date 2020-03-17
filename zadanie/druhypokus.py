@@ -2,9 +2,10 @@ import copy # kopirujem 2d listy prvok po prvku, a nie adresu, potrebne aby som 
 import heapq # kniznica na pouzitie heapu
 
 class StavMapy: # classa, ktorou si reprezentuje jedne prvok heapu, prvky su usporiadane podla premenej pocetRoznych
-    def __init__(self, mapa, pocetRoznych, predosli):
+    def __init__(self, mapa, pocetRoznych, operacia, predosli):
         self.mapa = copy.deepcopy(mapa) # 2d list reprezentuje mapu a jej aktualny stav
         self.pocetRoznych = pocetRoznych # pocet policok, ktore su na roznom mieste od koncoveho stavu
+        self.operacia = operacia # slovo operacie, ktora sa vykonala na prazdne policko
         self.predosli = predosli # odkaz na objekt Stav mapy z ktoreho bola mapa v tomto objekte vygenerovana
     def __lt__(self, other): # potrebna funkcia na porovnovanie v heape. ficura pythonu
         return self.pocetRoznych < other.pocetRoznych
@@ -88,7 +89,7 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo HORE",vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 nizsie v riadku
 # pocitac reprezentuje maticu od vrchu, takze sa vymeni prazdne policko s tym pod nim, ale iba ak to je mozne a nepojde prazdne policko mimo maticu
@@ -102,7 +103,7 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DOLE", vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 do lava v stlpci, musi skontrolovat, ci nejde mimo maticu
 # v hre sa takato akcia reprezentuje ako posun neprazdneho policka na prazdne
@@ -115,7 +116,7 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO LAVA", vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 do prava v stlpci, musi skontrolovat, ci nejde mimo maticu
 # v hre sa takato akcia reprezentuje ako posun neprazdneho policka na prazdne
@@ -128,7 +129,7 @@ def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = zistiPocetRoznych(obmenaMapy, mapaKoniec)
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO PRAVA", vytiahnuteHeap))
 
 # funkcia najprv vytiahne prvok z heapu, kde je najmensi pocet roznych prvkov na mape od koncoveho stavu
 # ak je heap prazdny, tak taketo zadanie nema riesenie
@@ -189,7 +190,7 @@ mapaKoniec = [[1, 2, 3],
               [7, 8, 0]]
 
 pocetRoznych = zistiPocetRoznych(mapaZaciatok, mapaKoniec)
-poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, None) # zadefinovanie zaciatku
+poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, "Zaciatok", None) # zadefinovanie zaciatku
 heapq.heappush(minHeap, poslednyVytiahnuty) # vlozenie heapu na zaciatok
 
 while(pocetRoznych is not 0):
@@ -201,15 +202,20 @@ while(pocetRoznych is not 0):
 rovnake = True
 if poslednyVytiahnuty is not None:
     rovnake = False
-    postupnost = []
+    # postupnost = []
+    postupnost2 = []
     print("Ukoncena postupnost:")
     while poslednyVytiahnuty is not None:
         pocetKrokov = pocetKrokov + 1
-        postupnost.append(poslednyVytiahnuty.mapa)
+        postupnost2.append(poslednyVytiahnuty.operacia)
+        # postupnost.append(poslednyVytiahnuty.mapa)
         poslednyVytiahnuty = poslednyVytiahnuty.predosli
-    for prvok in reversed(postupnost):
-        vypisMapu(prvok)
-        print("")
+    # for prvok in reversed(postupnost): pripadne vypisanie celej mapy
+    #     vypisMapu(prvok)
+    #     print("")
+    for prvok2 in reversed(postupnost2):
+        print(prvok2)
+    print("")
 else:
     rovnake = False
     print("Nema riesenie.")
