@@ -89,7 +89,7 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo HORE",vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "DOLE",vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 nizsie v riadku
 # pocitac reprezentuje maticu od vrchu, takze sa vymeni prazdne policko s tym pod nim, ale iba ak to je mozne a nepojde prazdne policko mimo maticu
@@ -103,7 +103,7 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DOLE", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "HORE", vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 do lava v stlpci, musi skontrolovat, ci nejde mimo maticu
 # v hre sa takato akcia reprezentuje ako posun neprazdneho policka na prazdne
@@ -116,7 +116,7 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO LAVA", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "VPRAVO", vytiahnuteHeap))
 
 # funkcia vyskusa, ci je mozne posunut prazdne policko o 1 do prava v stlpci, musi skontrolovat, ci nejde mimo maticu
 # v hre sa takato akcia reprezentuje ako posun neprazdneho policka na prazdne
@@ -129,7 +129,7 @@ def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = zistiPocetRoznych(obmenaMapy, mapaKoniec)
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO PRAVA", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "VLAVO", vytiahnuteHeap))
 
 # funkcia najprv vytiahne prvok z heapu, kde je najmensi pocet roznych prvkov na mape od koncoveho stavu
 # ak je heap prazdny, tak taketo zadanie nema riesenie

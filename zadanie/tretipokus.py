@@ -103,7 +103,7 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo HORE", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "DOLE", vytiahnuteHeap))
 
 
 def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
@@ -115,7 +115,7 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DOLE", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "HORE", vytiahnuteHeap))
 
 
 def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
@@ -127,7 +127,7 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = int(zistiPocetRoznych(obmenaMapy, mapaKoniec))
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO LAVA", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "VPRAVA", vytiahnuteHeap))
 
 
 def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
@@ -139,7 +139,7 @@ def skusPlusStlpec(vytiahnuteHeap, mapaKoniec):
         if hashObmeny not in hashSet:
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             pocetRoznychFunkcia = zistiPocetRoznych(obmenaMapy, mapaKoniec)
-            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "Prazdne policko islo DO PRAVA", vytiahnuteHeap))
+            heapq.heappush(minHeap, StavMapy(obmenaMapy, pocetRoznychFunkcia, "VLAVO", vytiahnuteHeap))
 
 
 def skusaj(mapaKoniec):
