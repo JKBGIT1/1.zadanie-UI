@@ -15,7 +15,7 @@ minHeap1 = [] # halda, do ktorej vhadzujem vsetky stavy mapy, ktore som vygenero
 minHeap2 = [] # halda, do ktorej vhadzujem vsetky stavy mapy, ktore som vygeneroval a neboli pouzite, usporiadanie podla hodnoty pocetRoznych v classe StavMapy, heuristika2
 hashSet = set() # tento set funguje ako hash tabulka, len bez hodnotou pre kluce, z dovodu, ze sem  nebudem davat duplikaty
 riadokNula = stlpecNula = 0 # globalne premenne, ktore mi drzia suradnice, kde sa nachadza 0, teda prazdne policko
-pocetSpracovanychUzlov = pocetVytvorenychUzlov = int(0)
+pocetSpracovanychUzlov = pocetVytvorenychUzlov = int(0) # premena pocetSpracovanychUzlov mi drzi pocet vygenerovanych a spracovanych uzlov, pocetVytvorenychUzlov mi drzi hodnotu poctu vsetkych vygenerovych uzlov
 
 # funkcia, ktorou si vypisujem mapu, pouzival som hlavne pri debugovani
 def vypisMapu(mapa):
@@ -181,7 +181,7 @@ def skusaj(mapaKoniec, heuristika2):
         vytiahnuteRozne = zistiPocetRoznych(vytiahnuteHeap.mapa, mapaKoniec) # zisti pocet policok, ktore este nie su na svojom mieste
     if vytiahnuteRozne is 0: # vytiahnuty uzol je koncovy
         return vytiahnuteHeap
-    hashSet.add(vytvorStringMapa(vytiahnuteHeap.mapa).__hash__())  # vytiahnuty uzol pridam do hashsetu
+    hashSet.add(vytvorStringMapa(vytiahnuteHeap.mapa).__hash__())  # vytiahnuty uzol pridam do hashsetu, aby som vedel, ktore uzly som už použil
     zistiPoziciuNula(vytiahnuteHeap.mapa) # zistim poziciu na ktorom je medzera (reprezentovane cislom 0)
     skusMinusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2) # zavolam funkciu, ktora vyskusa operaciu DOLE
     skusPlusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2) # zavolam funkciu, ktora vyskusa operaciu HORE
@@ -240,12 +240,32 @@ def vypisPostupu(poslednyVytiahnuty):
 # mapaKoniec = [[1, 2, 3],
 #               [4, 5, 6],
 #               [7, 8, 0]]
-mapaZaciatok = [[2, 3, 4],
-                [5, 1, 6],
-                [7, 8, 0]]
-mapaKoniec = [[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 0]]
+# mapaZaciatok = [[2, 3, 4],
+#                 [5, 1, 6],
+#                 [7, 8, 0]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
+
+# nacitanei veľkosti matice
+pocetRiadkov = int(input("Zadaj pocet riadkov: "))
+pocetStlpcov = int(input("Zadaj pocet stlpcov: "))
+
+mapaZaciatok = []
+# nacitanie mapy pre zaciatocny uzol po jednom policku
+print("Vytvor mapu pre zaciatocny uzol.")
+for i in range(pocetRiadkov):
+    mapaZaciatok.append([])
+    for j in range(pocetStlpcov):
+        mapaZaciatok[i].append(int(input("[" + str(i) + "]" + "[" + str(j) + "]: ")))
+
+mapaKoniec = []
+# nacitanie mapy pre koncovy uzol po jednom policku
+print("Vytvor mapu pre koncovy uzol.")
+for i in range(pocetRiadkov):
+    mapaKoniec.append([])
+    for j in range(pocetStlpcov):
+        mapaKoniec[i].append(int(input("[" + str(i) + "]" + "[" + str(j) + "]: ")))
 
 heuristika2 = koniec = False
 while(koniec is False):
