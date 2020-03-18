@@ -209,9 +209,11 @@ def vypisPostupu(poslednyVytiahnuty):
         rovnake = False
         print("Nema riesenie.")
     # vypisem udaje na zistenie efektivnosti
-    print("Pocet krokov: " + str(pocetKrokov - 1)) # -1, pretoze tam mam aj zaciatok
-    print("Pocet spracovanych uzlov " + str(pocetSpracovanychUzlov))
-    print("Pocet vygenerovanych uzlov " + str(pocetVytvorenychUzlov))
+    if pocetKrokov is not 0: # -1, pretoze tam mam aj zaciatok
+        pocetKrokov = pocetKrokov - 1
+    print("Pocet krokov: " + str(pocetKrokov))
+    print("Pocet spracovanych uzlov: " + str(pocetSpracovanychUzlov))
+    print("Pocet vygenerovanych uzlov: " + str(pocetVytvorenychUzlov))
 
     if rovnake:
         print("Zaciatocny stav je koncovy.")
@@ -254,28 +256,6 @@ mapaZaciatok = [[2, 3, 4],
 mapaKoniec = [[1, 2, 3],
               [4, 5, 6],
               [7, 8, 0]]
-
-
-# MOZNE MANUALNE NACITANIE, LEN TREBA ODKOMENTOVAT
-# # nacitanei veľkosti matice
-# pocetRiadkov = int(input("Zadaj pocet riadkov: "))
-# pocetStlpcov = int(input("Zadaj pocet stlpcov: "))
-#
-# mapaZaciatok = []
-# # nacitanie mapy pre zaciatocny uzol po jednom policku
-# print("Vytvor mapu pre zaciatocny uzol.")
-# for i in range(pocetRiadkov):
-#     mapaZaciatok.append([])
-#     for j in range(pocetStlpcov):
-#         mapaZaciatok[i].append(int(input("[" + str(i) + "]" + "[" + str(j) + "]: ")))
-#
-# mapaKoniec = []
-# # nacitanie mapy pre koncovy uzol po jednom policku
-# print("Vytvor mapu pre koncovy uzol.")
-# for i in range(pocetRiadkov):
-#     mapaKoniec.append([])
-#     for j in range(pocetStlpcov):
-#         mapaKoniec[i].append(int(input("[" + str(i) + "]" + "[" + str(j) + "]: ")))
 
 heuristika2 = koniec = False
 while(koniec is False):
