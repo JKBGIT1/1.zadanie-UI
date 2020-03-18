@@ -5,7 +5,7 @@ class StavMapy: # classa, ktorou si reprezentuje jedne prvok heapu, prvky su usp
     def __init__(self, mapa, pocetRoznych, operacia, predosli):
         self.mapa = copy.deepcopy(mapa) # 2d list reprezentuje mapu a jej aktualny stav
         self.pocetRoznych = pocetRoznych # pocet policok, ktore su na roznom mieste od koncoveho stavu
-        self.operacia = operacia # slovo operacie, ktora sa vykonala na prazdne policko
+        self.operacia = operacia # operacia, ktora bola pouzita na predchadzajuci uzol, aby sme sa dostali do tohto stavu
         self.predosli = predosli # odkaz na objekt Stav mapy z ktoreho bola mapa v tomto objekte vygenerovana
     def __lt__(self, other): # potrebna funkcia na porovnovanie v heape, ficura pythonu
         return self.pocetRoznych < other.pocetRoznych
