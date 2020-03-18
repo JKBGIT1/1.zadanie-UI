@@ -1,4 +1,4 @@
-# UI-1.zadanie
+# UI-2.zadanie
 Prve zadanie UI - greedy algorithms
 
 Programovací jazyk Python.
