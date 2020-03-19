@@ -1,7 +1,7 @@
 import copy # kopirujem 2d listy prvok po prvku, a nie adresu, potrebne aby som neprepisoval mapy, ktore nechcem
 import heapq # kniznica na pouzitie heapu
 
-class StavMapy: # classa, ktorou si reprezentuje jedne prvok heapu, prvky su usporiadane podla premenej pocetRoznych
+class StavMapy: # classa, ktorou si reprezentuje jeden prvok heapu, prvky su usporiadane podla premenej pocetRoznych
     def __init__(self, mapa, pocetRoznych, operacia, predosli):
         self.mapa = copy.deepcopy(mapa) # 2d list reprezentuje mapu a jej aktualny stav
         self.pocetRoznych = pocetRoznych # pocet policok, ktore su na roznom mieste od koncoveho stavu
@@ -68,7 +68,7 @@ def zistiPoziciuNula(mapaZaciatok):
                 riadokNula = i
                 stlpecNula = j
 
-# z mapy mi tato funkcia vytvori string, ktory potom hashujem a vhladam do hashSetu aby som vedel, ktore mapy uz boli vygenerovane a pouzite
+# z mapy mi tato funkcia vytvori string, ktory potom hashujem a vhladam do hashSetu aby som vedel, ktore mapy uz boli vygenerovane
 def vytvorStringMapa(mapa):
     string = ""
     for i in range(len(mapa)):
@@ -111,8 +111,10 @@ def skusMinusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2):
         if hashObmeny not in hashSet: # ak vygenerovany hash z obmeny nie je v hashSete, tak ho mozem hodit do heapu
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             if heuristika2: # riesim podla druhej heuristiky, zistim vzdialenost jednotlivych policok ku koncu a nasledne ich scita, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap2, StavMapy(obmenaMapy, int(zistiPocetRoznychVzdialenost(obmenaMapy, mapaKoniec)), "DOLE", vytiahnuteHeap))
             else: # resim podla prvej heuristiky, zistim pocet policok, ktore nie su na svojom mieste, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap1, StavMapy(obmenaMapy, int(zistiPocetRoznych(obmenaMapy, mapaKoniec)), "DOLE", vytiahnuteHeap))
 
 # funkcia vyskusa, ci sa pod prazdnym polickom nachadza este dalsie, ak ano, tak vykona operaciu HORE
@@ -125,8 +127,10 @@ def skusPlusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2):
         if hashObmeny not in hashSet: # ak vygenerovany hash z obmeny nie je v hashSete, tak ho mozem hodit do heapu
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             if heuristika2: # riesim podla druhej heuristiky, zistim vzdialenost jednotlivych policok ku koncu a nasledne ich scita, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap2, StavMapy(obmenaMapy, int(zistiPocetRoznychVzdialenost(obmenaMapy, mapaKoniec)), "HORE", vytiahnuteHeap))
             else: # resim podla prvej heuristiky, zistim pocet policok, ktore nie su na svojom mieste, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap1, StavMapy(obmenaMapy, int(zistiPocetRoznych(obmenaMapy, mapaKoniec)), "HORE", vytiahnuteHeap))
 
 # funkcia vyskusa, ci sa na lavo od prazdneho policka nachazda este dalsie, ak ano, tak vykona operaciu VPRAVO
@@ -139,8 +143,10 @@ def skusMinusStlpec(vytiahnuteHeap, mapaKoniec, heuristika2):
         if hashObmeny not in hashSet: # ak vygenerovany hash z obmeny nie je v hashSete, tak ho mozem hodit do heapu
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             if heuristika2: # riesim podla druhej heuristiky, zistim vzdialenost jednotlivych policok ku koncu a nasledne ich scita, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap2, StavMapy(obmenaMapy, int(zistiPocetRoznychVzdialenost(obmenaMapy, mapaKoniec)), "VPRAVO", vytiahnuteHeap))
             else: # resim podla prvej heuristiky, zistim pocet policok, ktore nie su na svojom mieste, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap1, StavMapy(obmenaMapy, int(zistiPocetRoznych(obmenaMapy, mapaKoniec)), "VPRAVO", vytiahnuteHeap))
 
 # funkcia vyskusa, ci sa na pravo od prazdneho policka nachadza este dalsie, ak ano, tak vykona operaciu VLAVO
@@ -153,15 +159,16 @@ def skusPlusStlpec(vytiahnuteHeap, mapaKoniec, heuristika2):
         if hashObmeny not in hashSet: # ak vygenerovany hash z obmeny nie je v hashSete, tak ho mozem hodit do heapu
             pocetVytvorenychUzlov = pocetVytvorenychUzlov + 1
             if heuristika2: # riesim podla druhej heuristiky, zistim vzdialenost jednotlivych policok ku koncu a nasledne ich scita, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap2, StavMapy(obmenaMapy, int(zistiPocetRoznychVzdialenost(obmenaMapy, mapaKoniec)), "VLAVO", vytiahnuteHeap))
             else: # resim podla prvej heuristiky, zistim pocet policok, ktore nie su na svojom mieste, vytvorim uzol a hodim do heapu
+                hashSet.add(hashObmeny) # vygenerovany hash dam do hashSetu, aby som ho znovu nehodil do haldy, ak ho nahodou vygenerujem
                 heapq.heappush(minHeap1, StavMapy(obmenaMapy, int(zistiPocetRoznych(obmenaMapy, mapaKoniec)), "VLAVO", vytiahnuteHeap))
 
 # funkcia najprv vytiahne uzol z heapu, kde je najmensi pocet roznych prvkov na mape od koncoveho stavu
 # ak je heap prazdny, tak taketo zadanie nema riesenie
 # ked heap nie je prazdny, tak funkcia skontroluje, ci uz nahodou nie sme v koncovom uzle, ak ano, tak skonci a vrati posledny uzol
-# ak nie sme v koncovom uzle, tak tento uzol prida do hashSetu, aby sa uz dalej nevkladal do heapu ak nahodou vznikne
-# nasledne zisti poziciu 0 a skusa vsetky 4 mozne posuny prazdneho policka v mape
+# ak nie sme v koncovom uzle, tak zisti poziciu 0 a skusa vsetky 4 operacie
 # na konci vrati prvok, ktory bol vytiahnuty z heapu aby si cyklus v ktorom sa spusta vedel urcit, ci ma skoncit alebo nie
 def skusaj(mapaKoniec, heuristika2):
     global pocetSpracovanychUzlov
@@ -181,7 +188,6 @@ def skusaj(mapaKoniec, heuristika2):
         vytiahnuteRozne = zistiPocetRoznych(vytiahnuteHeap.mapa, mapaKoniec) # zisti pocet policok, ktore este nie su na svojom mieste
     if vytiahnuteRozne is 0: # vytiahnuty uzol je koncovy
         return vytiahnuteHeap
-    hashSet.add(vytvorStringMapa(vytiahnuteHeap.mapa).__hash__())  # vytiahnuty uzol pridam do hashsetu, aby som vedel, ktore uzly som už použil
     zistiPoziciuNula(vytiahnuteHeap.mapa) # zistim poziciu na ktorom je medzera (reprezentovane cislom 0)
     skusMinusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2) # zavolam funkciu, ktora vyskusa operaciu DOLE
     skusPlusRiadok(vytiahnuteHeap, mapaKoniec, heuristika2) # zavolam funkciu, ktora vyskusa operaciu HORE
@@ -199,8 +205,8 @@ def vypisPostupu(poslednyVytiahnuty):
             postupnost2 = []
             print("Ukoncena postupnost:")
             while poslednyVytiahnuty is not None: # od posledneho vygenerovaneho uzla prechazdam ku zaciatocnemu, podla toho ako bola vygenerovana postupnost
-                pocetKrokov = pocetKrokov + 1 # zvysujem pocet krokov, ktore sa je potrebne vykonat, aby sa dostal zaciatocny uzol na koncovy
-                postupnost2.append(poslednyVytiahnuty.operacia) # operacie, ktore som vykonaval si dávam do listu, aby som ich potom vypisal
+                pocetKrokov = pocetKrokov + 1 # zvysujem pocet krokov, ktore je potrebne vykonat, aby sa dostal zaciatocny uzol na koncovy
+                postupnost2.append(poslednyVytiahnuty.operacia) # operacie, ktore som vykonaval si davam do listu, aby som ich potom vypisal
                 poslednyVytiahnuty = poslednyVytiahnuty.predosli # tymto prechodom sa dostanem od konecneho uzla na zaciatocny
             for prvok2 in reversed(postupnost2): # vypisem operacie ako boli generovane pri prechodoch v uzloch
                 print(prvok2)
@@ -218,12 +224,12 @@ def vypisPostupu(poslednyVytiahnuty):
     if rovnake:
         print("Zaciatocny stav je koncovy.")
 
-# mapaKoniec = [[1, 2, 3],
-#               [4, 5, 6],
-#               [7, 8, 0]]
-# mapaZaciatok = [[7, 8, 6],
-#                 [5, 4, 3],
-#                 [2, 0, 1]]
+mapaKoniec = [[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 0]]
+mapaZaciatok = [[7, 8, 6],
+                [5, 4, 3],
+                [2, 0, 1]]
 # mapaKoniec = [[1, 2, 3],
 #               [4, 6, 5],
 #               [7, 8, 0]]
@@ -250,12 +256,12 @@ def vypisPostupu(poslednyVytiahnuty):
 #               [5, 6, 7, 8],
 #               [9, 10, 12, 15],
 #               [13, 14, 11, 0]]
-mapaZaciatok = [[2, 3, 4],
-                [5, 1, 6],
-                [7, 8, 0]]
-mapaKoniec = [[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 0]]
+# mapaZaciatok = [[2, 3, 4],
+#                 [5, 1, 6],
+#                 [7, 8, 0]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
 
 heuristika2 = koniec = False
 while(koniec is False):
@@ -263,6 +269,7 @@ while(koniec is False):
         print("Riesim heuristika 1.")
         pocetRoznych = zistiPocetRoznych(mapaZaciatok, mapaKoniec) # zisti pocet policok, ktore nie su na svojom mieste
         poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, "Zaciatok", None) # vytvorim pociatocny uzol pre prvu heuristiku
+        hashSet.add(vytvorStringMapa(mapaZaciatok).__hash__())  # pociatocnu mapu pridam do hashSetu
         heapq.heappush(minHeap1, poslednyVytiahnuty)  # vlozenim zaciatocny uzol do heapu, ktory mi riadi cely algoritmus
         while(pocetRoznych is not 0): # pokial nie su vsetky policka na svojej pozicii, tak cyklus pokracuje
             poslednyVytiahnuty = skusaj(mapaKoniec, heuristika2) # funkcia vytiahne uzol z heapu a vyskusa vsetky mozne operacie (max 4)
@@ -277,6 +284,7 @@ while(koniec is False):
         print("\nRiesim heuristika 2")
         pocetRoznych = zistiPocetRoznychVzdialenost(mapaZaciatok, mapaKoniec) # zisti vzdialenost jednotlivych policok ku koncu a nasledne ich scita
         poslednyVytiahnuty = StavMapy(mapaZaciatok, pocetRoznych, "Zaciatok", None) # vytvorim pociatocny uzol pre druhu heuristiku
+        hashSet.add(vytvorStringMapa(mapaZaciatok).__hash__())  # pociatocnu mapu pridam do hashSetu, pretoze algoritmus zacina riesit podla druhej heuristiky
         heapq.heappush(minHeap2, poslednyVytiahnuty) # vlozim zaciatocny uzol do heapu, ktory mi riadi cely algoritmus
         while(pocetRoznych is not 0): # pokial nie su vsetky policka na svojej pozicii, tak cyklus pokracuje
             poslednyVytiahnuty = skusaj(mapaKoniec, heuristika2) # funkcia vytiahne uzol z heapu a vyskusa vsetky mozne operacie (max 4)
