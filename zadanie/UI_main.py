@@ -224,12 +224,12 @@ def vypisPostupu(poslednyVytiahnuty):
     if rovnake:
         print("Zaciatocny stav je koncovy.")
 
-mapaKoniec = [[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 0]]
-mapaZaciatok = [[7, 8, 6],
-                [5, 4, 3],
-                [2, 0, 1]]
+# mapaKoniec = [[1, 2, 3],
+#               [4, 5, 6],
+#               [7, 8, 0]]
+# mapaZaciatok = [[7, 8, 6],
+#                 [5, 4, 3],
+#                 [2, 0, 1]]
 # mapaKoniec = [[1, 2, 3],
 #               [4, 6, 5],
 #               [7, 8, 0]]
@@ -262,6 +262,12 @@ mapaZaciatok = [[7, 8, 6],
 # mapaKoniec = [[1, 2, 3],
 #               [4, 5, 6],
 #               [7, 8, 0]]
+mapaZaciatok = [[8, 0, 6],
+                [5, 4, 7],
+                [2, 3, 1]]
+mapaKoniec = [[0, 1, 2],
+              [3, 4, 5],
+              [6, 7, 8]]
 
 heuristika2 = koniec = False
 while(koniec is False):
